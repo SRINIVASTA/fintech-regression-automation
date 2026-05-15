@@ -2,9 +2,10 @@
 
 An automated end-to-end regression testing framework designed to validate core trading systems, transaction lifecycles, and risk evaluation engines. Built completely with Python, this framework provides automated test coverage via a web-based dashboard and standalone test suites.
 
+## ✍️ Author
 **Created by srinivasta**
 
-🔗 **Live Demo:** [Access the Web Dashboard](https://fintech-regression-automation-xmg7yrkex5apmvc29knpxl.streamlit.app/)
+🔗 **Live Demo:** [Access the Web Dashboard](https://streamlit.app)
 
 ## 🚀 Key Features
 
