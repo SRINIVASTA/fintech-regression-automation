@@ -5,7 +5,7 @@ An automated end-to-end regression testing framework designed to validate core t
 ## ✍️ Author
 **Created by srinivasta**
 
-🔗 **Live Demo:** [Access the Web Dashboard](https://streamlit.app)
+🔗 **Live Demo:** [Access the Web Dashboard](https://fintech-regression-automation-xmg7yrkex5apmvc29knpxl.streamlit.app/)
 
 ## 🚀 Key Features
 
