@@ -9,6 +9,7 @@ import pytest
 import warnings
 import os
 import json
+import random  # FIXED: Imported missing standard library to resolve NameError namespace crash
 
 # Suppress underlying warnings from cluttering the screen
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -77,7 +78,7 @@ if not data.empty:
         session_low_price = float(data['Low'].min().item())
         execution_timestamp = datetime.now(IST).strftime('%H:%M:%S')
         
-        # Calculate algorithmic execution side vectors (Randomized simulator engine logic)
+        # Calculate algorithmic execution side vectors (Using the now imported random module)
         trade_side_signal = random.choice(["🟢 BUY ORDER", "🔴 SELL ORDER"])
         
         # Save positions to session cache memories
@@ -103,7 +104,6 @@ if not data.empty:
         st.subheader("💵 Real-Time Market Data")
         
         m1, m2 = st.columns(2)
-        # Use fallback placeholders if no order has been dispatched yet
         m1.metric(f"Last Traded Price ({full_instrument_name})", f"${st.session_state.current_price:,.2f}" if st.session_state.current_price > 0 else "$0.00")
         m2.metric("Last Transacted Size", f"{st.session_state.total_volume:,} Units" if st.session_state.total_volume > 0 else "0 Units")
         
@@ -146,7 +146,7 @@ if not data.empty:
                     # Pop balloons only on an active click event cycle
                     if st.session_state.show_celebration:
                         st.balloons()
-                        st.session_state.show_celebration = False # Turn off loop memory flag
+                        st.session_state.show_celebration = False
                     
                     # Layman Explanation Metric Cards
                     kpi1, kpi2 = st.columns(2)
