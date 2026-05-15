@@ -7,6 +7,7 @@ import io
 import contextlib
 import pytest
 import warnings
+import os
 
 # Suppress pandas/yfinance FutureWarnings from flooding the UI layout
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -119,10 +120,15 @@ if not data.empty:
         # Intercept background console string messages to print directly inside Streamlit
         pytest_output = io.StringIO()
         with contextlib.redirect_stdout(pytest_output):
-            # FIXED: Injected "-W", "ignore" to completely silence transient framework warnings
-            pytest.main(["-v", "-W", "ignore", "test_trading_suite.py"])
+            # FIXED: Added --json-report generation capabilities to dump pipeline logs
+            pytest.main(["-v", "-W", "ignore", "--json-report", "--json-report-file=qa_metrics.json", "test_trading_suite.py"])
             
         st.code(pytest_output.getvalue(), language="text")
+        
+        # Display a direct local download hook link for Capgemini review managers
+        if os.path.exists("qa_metrics.json"):
+            with open("qa_metrics.json", "r") as file:
+                st.download_button(label="📥 Download JSON Test Report", data=file.read(), file_name="qa_report.json", mime="application/json")
 
 else:
     st.error("⚠️ Failed to synchronize live exchange feeds. Verify connectivity profiles or configuration inputs.")
