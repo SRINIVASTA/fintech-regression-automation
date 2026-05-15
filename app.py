@@ -119,8 +119,8 @@ if not data.empty:
         # Intercept background console string messages to print directly inside Streamlit
         pytest_output = io.StringIO()
         with contextlib.redirect_stdout(pytest_output):
-            # Run test framework file cleanly via main module hooks
-            pytest.main(["-v", "test_trading_suite.py"])
+            # FIXED: Injected "-W", "ignore" to completely silence transient framework warnings
+            pytest.main(["-v", "-W", "ignore", "test_trading_suite.py"])
             
         st.code(pytest_output.getvalue(), language="text")
 
