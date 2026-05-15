@@ -5,10 +5,14 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 def calculate_transaction_metrics(ticker: str, lots: int, multiplier: int) -> dict:
-    """Fetches live exchange data and processes structural volume and profit logic."""
+    """Fetches real-time exchange data and checks column matrix levels."""
     data = yf.download(ticker, period="1d", interval="1m", progress=False, auto_adjust=True)
     if data.empty:
         raise ConnectionError(f"Market data stream unreachable for Ticker: {ticker}")
+        
+    # Standardize column index arrays to avoid MultiIndex structure bugs
+    if isinstance(data.columns, pd.MultiIndex):
+        data.columns = data.columns.get_level_values(0)
         
     current_price = float(data['Close'].iloc[-1].item())
     low_price = float(data['Low'].min().item())
